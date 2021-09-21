@@ -1,10 +1,12 @@
 # Skitzphrenia
 A selfbot for discord
 
-# why you should choose this from the others
+# why you should choose Skitzphrenia
 + over 100 commands
 + over 30 image commands and nsfw commands
-+ easy setup
++ plenty of fun commands
++ vc commands
++  easy setup
 + original code / non skidded selfbot
 
 # where is the code?
