@@ -7,7 +7,7 @@ A selfbot for discord
 + plenty of fun commands
 + vc commands
 +  easy setup
-+ original code / non skidded selfbot
++ skitzphtnray is a non skidded selfbot 😱
 
 # where is the code?
 Skitzphrenia is almost complete and just needs some code cleanup / organizing. I hope to get it released by 9/25/21.
