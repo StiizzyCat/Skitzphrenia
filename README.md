@@ -1,4 +1,4 @@
-# StiizzyWare
+# Skitzphrenia
 A selfbot for discord
 
 # why you should choose this from the others
@@ -8,4 +8,4 @@ A selfbot for discord
 + original code / non skidded selfbot
 
 # where is the code?
-StiizzyWare is almost complete and just needs some code cleanup / organizing. I hope to get it released by 9/25/21.
+Skitzphrenia is almost complete and just needs some code cleanup / organizing. I hope to get it released by 9/25/21.
