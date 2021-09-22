@@ -15,4 +15,4 @@ Skitzphrenia is almost complete and just needs some code cleanup / organizing. I
 
 # note
 + I am not responsible for your actions, that is on you.
-+ if you fork or edit this source please credit me 😁
++ if you fork or edit this git please credit me 😁
