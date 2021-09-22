@@ -1,7 +1,5 @@
 # Skitzphrenia
 A selfbot for discord
-
-# info on Skitzprhena 
 + over 100 commands
 + over 30 image commands and nsfw commands
 + plenty of fun commands
