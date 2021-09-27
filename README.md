@@ -8,8 +8,7 @@ A selfbot for discord
 + skitzprhenia is a non skidded selfbot 😱
 # If you need any help refer to the wiki on how to start it up :)
 
-# where is the code?
-Skitzphrenia is almost complete and just needs some code cleanup / organizing. I hope to get it released by 9/25/21.
+# Released
 
 # note
 + I am not responsible for your actions, that is on you.
