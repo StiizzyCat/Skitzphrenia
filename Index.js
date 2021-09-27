@@ -31,7 +31,6 @@ const ytdl = require('ytdl-core');
 
 const btc_key = config.btc_key
 const clientid = config.clientid
-const cryptokey = config.cryptokey
 const ttslang = config.language
 const V = config.VERSION
 
