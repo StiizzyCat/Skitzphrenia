@@ -26,7 +26,7 @@ const api = require("imageapi.js")
 var pathToFfmpeg = require('ffmpeg-static');
 const ytdl = require('ytdl-core');
 
-////
+//// Skitzhprenia on top lol - stiizzy cat
 
 
 const btc_key = config.btc_key
