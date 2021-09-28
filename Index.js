@@ -646,7 +646,7 @@ client.on("message", async message => {
         message.channel.send(sexy)
         let shitfuck = new Discord.RichEmbed()
             .setColor('#FF0000')
-            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\n```", true)
+            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\n```", true)
         message.channel.send(shitfuck)
         let tack = new Discord.RichEmbed()
             .setColor('#FF0000')
@@ -939,21 +939,329 @@ client.on("message", async message => {
 
 
     if (command === "eject") {
-        let user = message.mentions.users.first()
-        if (!user) {
-            return message.reply("This person does not exist")
-        }
-        message.channel.send(`　
+    let user = message.mentions.users.first()
+    if (!user) {
+        return message.reply("This person does not exist")
+    }
+    message.channel.send(`　
 .　　　 　　.　　　　　。　　 。　. 　
-   
+
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
 
-　　ﾟ　 ${user.username} was not An Impostor.　 。　.
-  
-　　'　　　 1 Impostor remains 　 　　。
-  
+　　ﾟ　 ${user.username} w.　 。　.
+
+　　'　　　 　 　　。
+
 　　ﾟ　　　.　　　. ,　　　　.　 .`)
-    }
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} wa.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was n.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was no.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not a.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an .　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an i .　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an im .　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imp .　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an impo .　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an impos.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an impost.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposte.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 i 　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 im 　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imp　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 impo　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 impos　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 impost　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposte　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter r　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter re　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter rem　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter rema　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter remain　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+.then(msg => msg.edit(`
+.　　　 　　.　　　　　。　　 。　. 　
+
+.　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
+
+　　ﾟ　 ${user.username} was not an imposter.　 。　.
+
+　　'　　　  　 　1 imposter remains　。
+
+　　ﾟ　　　.　　　. ,　　　　.　 .`))
+}
+if (command === "brag") {
+    message.channel.send("S")
+    .then(msg => msg.edit("Sk"))
+    .then(msg => msg.edit("Ski"))
+    .then(msg => msg.edit("Skitz"))
+    .then(msg => msg.edit("Skitzp"))
+    .then(msg => msg.edit("Skitzph"))
+    .then(msg => msg.edit("Skitzphr"))
+    .then(msg => msg.edit("Skitzphre"))
+    .then(msg => msg.edit("Skitzphren"))
+    .then(msg => msg.edit("Skitzphreni"))
+    .then(msg => msg.edit("Skitzphrenia"))
+    .then(msg => msg.edit("Skitzphrenia O"))
+    .then(msg => msg.edit("Skitzphrenia On"))
+    .then(msg => msg.edit("Skitzphrenia On T"))
+    .then(msg => msg.edit("Skitzphrenia On To"))
+    .then(msg => msg.edit("Skitzphrenia On Top"))
+}
     if (command === "lolice") {
         axios.get(`https://nekobot.xyz/api/imagegen?type=lolice&url=${message.author.avatarURL}`)
             .then(async res => {
