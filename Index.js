@@ -652,7 +652,7 @@ client.on("message", async message => {
         message.channel.send(shitfuck)
         let tack = new Discord.RichEmbed()
             .setColor('#FF0000')
-            .addField('Utility Cmds', "```\ndefine + word - defines word with urban dictionary\nlookup + ip - searches ip for location n the shit yk\nd + soundcloud link - downloads song from soundcloud\nyt + youtube link - downloads the yt video\nspoiler + text hides text in spoiler format\nghostping + users @ - ghostpings user :troll:\n```", true)
+            .addField('Utility Cmds', "```\ndefine + word - defines word with urban dictionary\nlookup + ip - searches ip for location n the shit yk\nd + soundcloud link - downloads song from soundcloud\nyt + youtube link - downloads the yt video\nspoiler + text hides text in spoiler format\nghostping + users @ - ghostpings user :troll:\nfirstmessage - finds the channels first message```", true)
         message.channel.send(tack)
 
     }
@@ -938,6 +938,15 @@ client.on("message", async message => {
                 message.channel.send(data.message)
             })
     }
+    if(command === "firstmessage"){
+    const fetchmessages = await message.channel.fetchMessages({ after: 1, limit: 1 });
+    const SEXY = fetchmessages.first();
+    const SEX  = new Discord.RichEmbed()
+    .setTitle(`hop to first message`)
+    .setURL(SEXY.url)
+    .setFooter("Skitzphrenia found it")
+    message.channel.send(SEX)
+}
     if (command === "hack"){
     const userid = args.join(" ");
 
