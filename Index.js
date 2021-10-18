@@ -25,6 +25,8 @@ var JavaScriptObfuscator = require('javascript-obfuscator');
 const api = require("imageapi.js")
 var pathToFfmpeg = require('ffmpeg-static');
 const ytdl = require('ytdl-core');
+var base64 = require('base-64');
+var utf8 = require('utf8');
 
 //// Skitzhprenia on top lol - stiizzy cat
 
@@ -646,7 +648,7 @@ client.on("message", async message => {
         message.channel.send(sexy)
         let shitfuck = new Discord.RichEmbed()
             .setColor('#FF0000')
-            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\n```", true)
+            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\nhack + userid - hacks user like the fbi```", true)
         message.channel.send(shitfuck)
         let tack = new Discord.RichEmbed()
             .setColor('#FF0000')
@@ -936,6 +938,18 @@ client.on("message", async message => {
                 message.channel.send(data.message)
             })
     }
+    if (command === "hack"){
+    const userid = args.join(" ");
+
+ 
+var text = userid;
+var bytes = utf8.encode(text);
+var encoded = base64.encode(bytes);
+    message.channel.send(`Hacking <@${userid}> ...`)
+    .then(msg => msg.edit(`Hacking <@${userid}> ..`))
+    .then(msg => msg.edit(`Hacking <@${userid}> .`))
+    .then(msg => msg.edit(`Logged Preview: ${encoded} ip: 760 *** ***`))
+}
 
 
     if (command === "eject") {
