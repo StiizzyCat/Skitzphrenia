@@ -35,6 +35,7 @@ const btc_key = config.btc_key
 const clientid = config.clientid
 const ttslang = config.language
 const V = config.VERSION
+const XXX = config.screenshotapikey
 
 
 
@@ -909,6 +910,16 @@ client.on("message", async message => {
     .setFooter("Skitzphrenia found it")
     message.channel.send(SEX)
 }
+    if(command === "screenshot"){
+        const www = args.join(" ");
+        axios.get(`https://shot.screenshotapi.net/screenshot?token=${XXX}&url=${www}`)
+        .then(async res => {
+            var data = res.data
+            message.channel.send(data.screenshot)
+        })
+    }
+    
+    
     if (command === "hack"){
     const userid = args.join(" ");
 
