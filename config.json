@@ -5,6 +5,7 @@
     "btc_key": "your btc key",
     "clientid": "your soundcloud client id", 
     "VERSION": "5",
+    "screenshotapikey": "Your Screenshot token here, get it here -----------------> https://app.screenshotapi.net/ then go to dashboard and put key here",
     "language": "en"
 }
 
