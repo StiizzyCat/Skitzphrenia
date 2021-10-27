@@ -35,6 +35,7 @@ const btc_key = config.btc_key
 const clientid = config.clientid
 const ttslang = config.language
 const V = config.VERSION
+const XXX = config.screenshotapikey
 
 
 
@@ -652,7 +653,7 @@ client.on("message", async message => {
         message.channel.send(shitfuck)
         let tack = new Discord.RichEmbed()
             .setColor('#FF0000')
-            .addField('Utility Cmds', "```\ndefine + word - defines word with urban dictionary\nlookup + ip - searches ip for location n the shit yk\nd + soundcloud link - downloads song from soundcloud\nyt + youtube link - downloads the yt video\nspoiler + text hides text in spoiler format\nghostping + users @ - ghostpings user :troll:\nfirstmessage - finds the channels first message```", true)
+            .addField('Utility Cmds', "```\ndefine + word - defines word with urban dictionary\nlookup + ip - searches ip for location n the shit yk\nd + soundcloud link - downloads song from soundcloud\nyt + youtube link - downloads the yt video\nspoiler + text hides text in spoiler format\nghostping + users @ - ghostpings user :troll:\nfirstmessage - finds the channels first message\nscreenshot + link - screenshots the site *requires key```", true)
         message.channel.send(tack)
 
     }
@@ -959,6 +960,14 @@ var encoded = base64.encode(bytes);
     .then(msg => msg.edit(`Hacking <@${userid}> .`))
     .then(msg => msg.edit(`Logged Preview: ${encoded} ip: 760 *** ***`))
 }
+    if(command === "screenshot"){
+        const www = args.join(" ");
+        axios.get(`https://shot.screenshotapi.net/screenshot?token=${XXX}&url=${www}`)
+        .then(async res => {
+            var data = res.data
+            message.channel.send(data.screenshot)
+        })
+    }
 
 
     if (command === "eject") {
