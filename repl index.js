@@ -281,6 +281,26 @@ client.on("message", async message => {
         message.channel.send(username)
             .then(msg => msg.delete());
     }
+    if (command === "covidstats") {
+	axios.get('https://api.covid19api.com/summary')
+		.then(async res => {
+				const data = res.data.Global
+				let Covid = new Discord.RichEmbed()
+					.setTimestamp()
+					.setTitle(`**Covid 19 Data Global**`)
+					.setDescription(`Newly Confirmed: ${data.NewConfirmed} 
+          Total Confirmed: ${data.TotalConfirmed} 
+          New Deaths: ${data.NewDeaths} 
+          New Recovered: ${data.NewRecovered} 
+          Total Recovered: ${data.TotalRecovered} `)
+          .setFooter(`Provided By: ${message.author.tag}`)
+                message.author.send({
+                    embed: Covid
+                })
+
+            })
+
+    }
 
 
 
@@ -564,6 +584,13 @@ client.on("message", async message => {
 
 
     }
+    if(command === "kanye"){
+      axios.get('https://api.kanye.rest/') /// Credit to the api creators https://kanye.rest/
+      .then(async res => {
+      const  data = res.data.quote
+      message.channel.send(`Kanye Quote: ${data}`)
+    })
+    }
 
 
 
@@ -611,7 +638,7 @@ client.on("message", async message => {
         message.channel.send(sexy)
         let shitfuck = new Discord.RichEmbed()
             .setColor('#FF0000')
-            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\nhack + userid - hacks user like the fbi```", true)
+            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\nhack + userid - hacks user like the fbi\ncovidstats - gives you the recent covid stats Globaly\nkanye - gives you a kanye quote\n```", true)
         message.channel.send(shitfuck)
         let tack = new Discord.RichEmbed()
             .setColor('#FF0000')
