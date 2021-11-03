@@ -319,6 +319,34 @@ client.on("message", async message => {
         message.channel.send(username)
             .then(msg => msg.delete());
     }
+     if (command === "covidstats") {
+	axios.get('https://api.covid19api.com/summary')
+		.then(async res => {
+				const data = res.data.Global
+				let Covid = new Discord.RichEmbed()
+					.setTimestamp()
+					.setTitle(`**Covid 19 Data Global**`)
+					.setDescription(`Newly Confirmed: ${data.NewConfirmed} 
+          Total Confirmed: ${data.TotalConfirmed} 
+          New Deaths: ${data.NewDeaths} 
+          New Recovered: ${data.NewRecovered} 
+          Total Recovered: ${data.TotalRecovered} `)
+          .setFooter(`Provided By: ${message.author.tag}`)
+                message.author.send({
+                    embed: Covid
+                })
+
+            })
+
+    }
+       if(command === "kanye"){
+      axios.get('https://api.kanye.rest/') /// Credit to the api creators https://kanye.rest/
+      .then(async res => {
+      const  data = res.data.quote
+      message.channel.send(`Kanye Quote: ${data}`)
+    })
+    }
+
 
 
 
