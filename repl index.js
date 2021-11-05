@@ -4,7 +4,6 @@ const path = require('path')
 const fetch = require('node-fetch')
 const translate = require('@iamtraction/google-translate');
 const googleTTS = require('google-tts-api');
-const ConsoleTitle = require("node-bash-title");
 const dogFacts = require('dog-facts');
 const chalk = require('chalk');
 var geoip = require('geoip-lite');
@@ -35,9 +34,7 @@ const btc_key = config.btc_key
 const clientid = config.clientid
 const ttslang = config.language
 const V = config.VERSION
-const XXX = config.screenshotapikey
-
-
+const sskey = config.screenshotapikey
 
 
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -64,10 +61,48 @@ client.on("message", async message => {
     const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
+    // ARRAYS HERE <-------------------------------------------------------------->
+    let responsess = ["As I see it, yes", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again", "Don't count on it", "It is certain", "It is decidedly so"];
+    const responses = responsess[Math.floor(Math.random() * responsess.length)];
 
-
-
-    if (command === "eval") {
+        let nekoslifee = ["/img/Random_hentai_gif", "/img/pussy", "/img/nsfw_neko_gif", "/img/lewd", "/img/les", "/img/kuni", "/img/cum", "classic", "/img/classic",
+        "/img/boobs",
+        "/img/bj",
+        "/img/anal",
+        "/img/nsfw_avatar",
+        "/img/yuri",
+        "/img/trap",
+        "/img/tits",
+        "/img/solog",
+        "/img/solo",
+        "/img/pwankg",
+        "/img/pussy_jpg",
+        "/img/lewdkemo",
+        "/img/lewdk",
+        "/img/keta",
+        "/img/hololewd",
+        "/img/holoero",
+        "/img/hentai",
+        "/img/futanari",
+        "/img/femdom",
+        "/img/feetg",
+        "/img/erofeet",
+        "/img/feet",
+        "/img/ero",
+        "/img/erok",
+        "/img/erokemo", "/img/eron",
+        "/img/eroyuri", "/img/cum_jpg", "/img/blowjob", "/img/spank", "/img/gasm"
+    ]
+    const nekoslife = nekoslifee[Math.floor(Math.random() * nekoslifee.length)];
+    
+    // UTILITY COMMANDS HERE <--------------------------------------------------->
+      const google = new Scraper({
+        puppeteer: {
+            headless: true,
+        },
+    });
+    
+        if (command === "eval") {
         if (args.join(' ').includes('token')) return message.channel.send('no')
         let res
         try {
@@ -87,19 +122,187 @@ client.on("message", async message => {
                 .setFooter("Eval"))
         }
     }
-    const google = new Scraper({
-        puppeteer: {
-            headless: true,
-        },
-    });
+     if (command === "hostip") {
+        const ip = args.join(" ");
+        const hostname = `${ip}`
+        hostToIp(hostname).then(ip => message.channel.send(ip)).catch(err => console.error(err))
+    }
+    if (command === "translate") {
+        const query = args.join(" ");
+        if (!query) return message.reply("I need text to translate");
+
+        const translated = await translate(query, {
+            to: 'en'
+        });
+        message.channel.send(translated.text);
+    }
+    if (command === "covidstats") {
+	axios.get('https://api.covid19api.com/summary')
+		.then(async res => {
+				const data = res.data.Global
+				let Covid = new Discord.RichEmbed()
+					.setTimestamp()
+					.setTitle(`**Covid 19 Data Global**`)
+					.setDescription(`Newly Confirmed: ${data.NewConfirmed} 
+          Total Confirmed: ${data.TotalConfirmed} 
+          New Deaths: ${data.NewDeaths} 
+          New Recovered: ${data.NewRecovered} 
+          Total Recovered: ${data.TotalRecovered} `)
+          .setFooter(`Provided By: ${message.author.tag}`)
+                message.author.send({
+                    embed: Covid
+                })
+
+            })
+
+    }
+     if (command === "guildinfo") {
+        const sinfo = new Discord.RichEmbed()
+            .setTitle('Member Count')
+            .setColor('#800080')
+            .setDescription(`Server name:** ${message.guild.name}\n**Total members:** ${message.guild.memberCount}**`)
+            .setFooter('provided by Skitzphrenia')
+        message.channel.send("", sinfo)
+    }
+    if (command === "lookup") {
+        message.channel.send('I completed the Search check ur dms')
+        axios.get(`http://ip-api.com/json/${args}`)
+            .then(async res => {
+                var data = res.data
+                let Geo = new Discord.RichEmbed()
+                    .setTimestamp()
+                    .setTitle(`**GeoIP Lookup**`)
+                    .setDescription(`**Looked Up IP**: ${args}
+**ASN:** ${data.as}
+**Contury:** ${data.country}
+**Region:** ${data.regionName}
+**CITY:** ${data.city}
+**Zip:** ${data.zip}
+**Lat:** ${data.lat}
+**Lon:** ${data.lon}
+**ISP:** ${data.isp}
+**Timezone:** ${data.timezone}
+ `)
+                    .setFooter(`Provided By: ${message.author.tag}`)
+                message.author.send({
+                    embed: Geo
+                })
+
+            })
+
+    }
+
+    if (command === "spoiler") {
+        const special = args.join(" ");
+        message.channel.send(` ||${special}||`)
+    }
 
 
 
+    if (command === "userinfo") {
+        let user = message.mentions.users.first()
+        if (!user) {
+            return message.reply("Error are you doing it correctly?  PREFIX + userinfo @user")
+        }
+        message.channel.send(("", {
+            embed: new Discord.RichEmbed()
+                .setTimestamp()
+                .setTitle("**Userinfo**")
+                .setColor("#36393F")
+                .setThumbnail(user.avatarURL)
+                .setDescription("Username - **" + user.username + "**\nDiscrim  - **" + user.discriminator + "**\n")
+                .addField('Joined Discord', `${moment(message.author.createdAt).format('MM.DD.YY')}`, true)
+                .addField('Joined Server', `${moment(message.member.joinedAt).format('MM.DD.YY')}`, true)
+                .addField('Roles', `${message.member.roles.filter(r => r.name).size}`, true)
+                .setFooter("Skitzphrenia Found It!")
+        }));
+    }
+    if (command === "av") {
+        let user = message.mentions.users.first()
+        if (!user) {
+            return message.reply("Error are you doing it correctly?  PREFIX + userinfo @user")
+        }
+        message.channel.send(("", {
+            embed: new Discord.RichEmbed()
+                .setTitle("Users Avatar")
+                .setURL(user.avatarURL)
+                .setColor("#36393F")
+                .setImage(user.avatarURL)
 
-    let responsess = ["As I see it, yes", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again", "Don't count on it", "It is certain", "It is decidedly so"];
-    const responses = responsess[Math.floor(Math.random() * responsess.length)];
+        }));
+    }
+    if (command === "ytdl") {
+        const link = args.join(" ");
+        ytdl(`${link}`)
+            .pipe(fs.createWriteStream('videoplayback-1.mp4'));
 
-    if (command === "gayrate") {
+        await new Promise(resolve => setTimeout(resolve, 6000));
+
+        message.channel.send({
+            files: ["videoplayback-1.mp4"]
+        });
+    }
+
+    if (command === "nsfwcheck") {
+        if (message.guild === null) return message.channel.send('I can only execute this in a guild')
+        var _0x865a = ["\x6E\x73\x66\x77", "\x63\x68\x61\x6E\x6E\x65\x6C", "\x74\x68\x69\x73\x20\x63\x68\x61\x6E\x6E\x65\x6C\x20\x69\x73\x20\x4E\x53\x46\x57", "\x73\x65\x6E\x64", "\x74\x68\x69\x73\x20\x63\x68\x61\x6E\x6E\x65\x6C\x20\x69\x73\x20\x53\x46\x57"];
+        if (message[_0x865a[1]][_0x865a[0]]) {
+            message[_0x865a[1]][_0x865a[3]](_0x865a[2])
+        } else {
+            message[_0x865a[1]][_0x865a[3]](_0x865a[4])
+        }
+    }
+    if (command === "hastebin") {
+        let text = args.join(" ");
+        hastebin(text).then(r => {
+            message.channel.send("URL: " + r);
+        })
+    }
+    if (command === "d") {
+        const link = args.join(" ");
+        const SOUNDCLOUD_URL = `${link}`
+        const CLIENT_ID = (clientid)
+        fs.unlinkSync('audio.mp3')
+        scdl.download(SOUNDCLOUD_URL).then(stream => stream.pipe(fs.createWriteStream('audio.mp3')))
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        message.channel.send({
+            files: ["audio.mp3"]
+        });
+    }
+    // EMBEDS HERE VVVVV
+
+    if (command === "help") {
+        let fuck = new Discord.RichEmbed()
+            .setColor('#FF0000')
+            .addField('image cmds', "```\nimgsearch + keyword - searches image from google and sends to chat\nneko - sends a pic of a neko\nnekogif - sends a neko gif\n\ndog sends a random pic of a cute doggy\nlocalmeme - gets a meme off our database\nmeme - gets meme off of reddit using an api\ndababy - sends dababy thinking bubble\ncock - sends i like cock bubble\nfurry - sends furry thinking box\ntweet + text - makes an tweet image\ntrumptweet + text - makes trump say whatever you want *do not use this to impersonate\ndeepfry - deepfrys your avatar\n magik + 1-10 - magiks ur avatar\niphone - iphonexs ur pfp\n```", true)
+        message.channel.send(fuck)
+        let extendo = new Discord.RichEmbed()
+            .setColor('#FF0000')
+            .addField('More Img Cmds', "```\neject + @user - eject the user like among us\njpeg - jpegs ur avatar\nlolice - makes ur avarat a lolice cheif\nthreat - puts ur pfp on the worlds top threats\ncaptcha - turns ur pfp into a captcha\nphub + text - makes ur pfp and text a phub post\n```", true)
+        message.channel.send(extendo)
+        let sexy = new Discord.RichEmbed()
+            .setColor('#FF0000')
+            .addField('NSFW Cmds', "```\npnsfw - sends nsfw image to ur dms if there is no nsfw channel in the guild\nBoobs - sends Boob pics\npusy - sends pussy pics\nanial - sends anial pics\nhentaigif - sends a hentai gif\nlewd - sends a lewd neko\nlewdgif - sends a lewd neko gif\ntitz - gets a pic of tits\nsologirl - gets a solo girl pic\npussywank - pussywank\ngasim - get a gasmim gif/pic\navatar - gets an nsfw avatar\n```", true)
+        message.channel.send(sexy)
+        let shitfuck = new Discord.RichEmbed()
+            .setColor('#FF0000')
+            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - Not Avalible On Repl\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\nhack + userid - hacks user like the fbi```", true)
+        message.channel.send(shitfuck)
+        let tack = new Discord.RichEmbed()
+            .setColor('#FF0000')
+            .addField('Utility Cmds', "```\ndefine + word - defines word with urban dictionary\nlookup + ip - searches ip for location n the shit yk\nd + soundcloud link - downloads song from soundcloud\nyt + youtube link - downloads the yt video\nspoiler + text hides text in spoiler format\nghostping + users @ - ghostpings user :troll:\nfirstmessage - finds the channels first message\nscreenshot + link - screenshots the site *requires key\nobfuscate - Not Avalible On Repl\n```", true)
+        message.channel.send(tack)
+    }
+      
+    if (command === "botinfo") {
+        let helpembed = new Discord.RichEmbed()
+            .setColor('#FF0000')
+            .addField('NSFW Cmds', "```\nSkitzphrenia V5\n----------------\nCoded By Stiizzy!\n----------------\nCommand count: 104\n----------------\nVersion: 5.1\n ```", true)
+        message.channel.send(helpembed)
+    }
+    // Fun Commands here
+     if (command === "gayrate") {
         let user = message.mentions.users.first()
         if (!user) {
             return message.reply("This person does not exist")
@@ -180,11 +383,7 @@ client.on("message", async message => {
         }));
     }
 
-    if (command === "hostip") {
-        const ip = args.join(" ");
-        const hostname = `${ip}`
-        hostToIp(hostname).then(ip => message.channel.send(ip)).catch(err => console.error(err))
-    }
+   
 
 
     if (command === "meme") {
@@ -241,18 +440,7 @@ client.on("message", async message => {
         }
     }
 
-    if (command === "translate") {
-        const query = args.join(" ");
-        if (!query) return message.reply("I need text to translate");
-
-        const translated = await translate(query, {
-            to: 'en'
-        });
-        message.channel.send(translated.text);
-    }
-
-
-
+    
 
     if (command === 'fuck') {
         message.react('🇫')
@@ -269,50 +457,27 @@ client.on("message", async message => {
             .then(() => message.react('🇾'))
     }
 
-    if (command === "hastebin") {
-        let text = args.join(" ");
-        hastebin(text).then(r => {
-            message.channel.send("URL: " + r);
-        })
-    }
+    
 
     if (command === "ghostping") {
         const username = args.join(" ")
         message.channel.send(username)
             .then(msg => msg.delete());
     }
-    if (command === "covidstats") {
-	axios.get('https://api.covid19api.com/summary')
-		.then(async res => {
-				const data = res.data.Global
-				let Covid = new Discord.RichEmbed()
-					.setTimestamp()
-					.setTitle(`**Covid 19 Data Global**`)
-					.setDescription(`Newly Confirmed: ${data.NewConfirmed} 
-          Total Confirmed: ${data.TotalConfirmed} 
-          New Deaths: ${data.NewDeaths} 
-          New Recovered: ${data.NewRecovered} 
-          Total Recovered: ${data.TotalRecovered} `)
-          .setFooter(`Provided By: ${message.author.tag}`)
-                message.author.send({
-                    embed: Covid
-                })
-
-            })
-
+     
+       if(command === "kanye"){
+      axios.get('https://api.kanye.rest/') /// Credit to the api creators https://kanye.rest/
+      .then(async res => {
+      const  data = res.data.quote
+      message.channel.send(`Kanye Quote: ${data}`)
+    })
     }
 
 
 
 
-    if (command === "guildinfo") {
-        const sinfo = new Discord.RichEmbed()
-            .setTitle('Member Count')
-            .setColor('#800080')
-            .setDescription(`Server name:** ${message.guild.name}\n**Total members:** ${message.guild.memberCount}**`)
-            .setFooter('provided by Skitzphrenia')
-        message.channel.send("", sinfo)
-    }
+
+   
     if (command === "speak") {
         const messageToSay = args.join(" ");
         if (args.join(' ').split(PREFIX + command).length == 1 && !messageToSay == '')
@@ -464,6 +629,16 @@ client.on("message", async message => {
             }, 300)
         })
     }
+      if (command == "btc") {
+        btcValue().then(value => {
+            let embed = new Discord.RichEmbed()
+                .setAuthor('Bitcoin price!', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png', 'https://www.google.com/search?q=bitcoin+price&rlz=1CAIUCL_enUS916&oq=bitcoin+price&aqs=chrome..69i57j69i59j0i433l2j0l4j0i433j0.8861j1j7&sourceid=chrome&ie=UTF-8&safe=active&ssui=on')
+                .setColor("#ff9900")
+                .setDescription('$' + `${value} USD`);
+            message.channel.send(embed)
+
+        });
+    }
 
     if (command === "tts") {
         const text = args.join(" ");
@@ -505,150 +680,7 @@ client.on("message", async message => {
         message.channel.send(`** **||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||||​||${link}`)
     }
 
-
-
-    if (command === "lookup") {
-        message.channel.send('I completed the Search check ur dms')
-        axios.get(`http://ip-api.com/json/${args}`)
-            .then(async res => {
-                var data = res.data
-                let Geo = new Discord.RichEmbed()
-                    .setTimestamp()
-                    .setTitle(`**GeoIP Lookup**`)
-                    .setDescription(`**Looked Up IP**: ${args}
-**ASN:** ${data.as}
-**Contury:** ${data.country}
-**Region:** ${data.regionName}
-**CITY:** ${data.city}
-**Zip:** ${data.zip}
-**Lat:** ${data.lat}
-**Lon:** ${data.lon}
-**ISP:** ${data.isp}
-**Timezone:** ${data.timezone}
- `)
-                    .setFooter(`Provided By: ${message.author.tag}`)
-                message.author.send({
-                    embed: Geo
-                })
-
-            })
-
-    }
-
-
-    if (command === "userinfo") {
-        let user = message.mentions.users.first()
-        if (!user) {
-            return message.reply("Error are you doing it correctly?  PREFIX + userinfo @user")
-        }
-        message.channel.send(("", {
-            embed: new Discord.RichEmbed()
-                .setTimestamp()
-                .setTitle("**Userinfo**")
-                .setColor("#36393F")
-                .setThumbnail(user.avatarURL)
-                .setDescription("Username - **" + user.username + "**\nDiscrim  - **" + user.discriminator + "**\n")
-                .addField('Joined Discord', `${moment(message.author.createdAt).format('MM.DD.YY')}`, true)
-                .addField('Joined Server', `${moment(message.member.joinedAt).format('MM.DD.YY')}`, true)
-                .addField('Roles', `${message.member.roles.filter(r => r.name).size}`, true)
-                .setFooter("Skitzphrenia Found It!")
-        }));
-    }
-    if (command === "av") {
-        let user = message.mentions.users.first()
-        if (!user) {
-            return message.reply("Error are you doing it correctly?  PREFIX + userinfo @user")
-        }
-        message.channel.send(("", {
-            embed: new Discord.RichEmbed()
-                .setTitle("Users Avatar")
-                .setURL(user.avatarURL)
-                .setColor("#36393F")
-                .setImage(user.avatarURL)
-
-        }));
-    }
-
-    if (command === "d") {
-        const link = args.join(" ");
-        const SOUNDCLOUD_URL = `${link}`
-        const CLIENT_ID = (clientid)
-        fs.unlinkSync('audio.mp3')
-        scdl.download(SOUNDCLOUD_URL).then(stream => stream.pipe(fs.createWriteStream('audio.mp3')))
-        await new Promise(resolve => setTimeout(resolve, 5000));
-
-        message.channel.send({
-            files: ["audio.mp3"]
-        });
-
-
-
-    }
-    if(command === "kanye"){
-      axios.get('https://api.kanye.rest/') /// Credit to the api creators https://kanye.rest/
-      .then(async res => {
-      const  data = res.data.quote
-      message.channel.send(`Kanye Quote: ${data}`)
-    })
-    }
-
-
-
-
-    if (command === "ytdl") {
-        const link = args.join(" ");
-        ytdl(`${link}`)
-            .pipe(fs.createWriteStream('videoplayback-1.mp4'));
-
-        await new Promise(resolve => setTimeout(resolve, 6000));
-
-        message.channel.send({
-            files: ["videoplayback-1.mp4"]
-        });
-    }
-    if (command === "botinfo") {
-        let helpembed = new Discord.RichEmbed()
-            .setColor('#FF0000')
-            .addField('NSFW Cmds', "```\nSkitzphrenia V5\n----------------\nCoded By Stiizzy!\n----------------\nCommand count: 104\n----------------\nVersion: 5.1\n ```", true)
-        message.channel.send(helpembed)
-    }
-
-
-    if (command === "nsfwcheck") {
-        if (message.guild === null) return message.channel.send('I can only execute this in a guild')
-        var _0x865a = ["\x6E\x73\x66\x77", "\x63\x68\x61\x6E\x6E\x65\x6C", "\x74\x68\x69\x73\x20\x63\x68\x61\x6E\x6E\x65\x6C\x20\x69\x73\x20\x4E\x53\x46\x57", "\x73\x65\x6E\x64", "\x74\x68\x69\x73\x20\x63\x68\x61\x6E\x6E\x65\x6C\x20\x69\x73\x20\x53\x46\x57"];
-        if (message[_0x865a[1]][_0x865a[0]]) {
-            message[_0x865a[1]][_0x865a[3]](_0x865a[2])
-        } else {
-            message[_0x865a[1]][_0x865a[3]](_0x865a[4])
-        }
-    }
-    if (command === "help") {
-        let fuck = new Discord.RichEmbed()
-            .setColor('#FF0000')
-            .addField('image cmds', "```\nimgsearch + keyword - searches image from google and sends to chat\nneko - sends a pic of a neko\nnekogif - sends a neko gif\n\ndog sends a random pic of a cute doggy\nlocalmeme - gets a meme off our database\nmeme - gets meme off of reddit using an api\ndababy - sends dababy thinking bubble\ncock - sends i like cock bubble\nfurry - sends furry thinking box\ntweet + text - makes an tweet image\ntrumptweet + text - makes trump say whatever you want *do not use this to impersonate\ndeepfry - deepfrys your avatar\n magik + 1-10 - magiks ur avatar\niphone - iphonexs ur pfp\n```", true)
-        message.channel.send(fuck)
-        let extendo = new Discord.RichEmbed()
-            .setColor('#FF0000')
-            .addField('More Img Cmds', "```\neject + @user - eject the user like among us\njpeg - jpegs ur avatar\nlolice - makes ur avarat a lolice cheif\nthreat - puts ur pfp on the worlds top threats\ncaptcha - turns ur pfp into a captcha\nphub + text - makes ur pfp and text a phub post\n```", true)
-        message.channel.send(extendo)
-        let sexy = new Discord.RichEmbed()
-            .setColor('#FF0000')
-            .addField('NSFW Cmds', "```\npnsfw - sends nsfw image to ur dms if there is no nsfw channel in the guild\nBoobs - sends Boob pics\npusy - sends pussy pics\nanial - sends anial pics\nhentaigif - sends a hentai gif\nlewd - sends a lewd neko\nlewdgif - sends a lewd neko gif\ntitz - gets a pic of tits\nsologirl - gets a solo girl pic\npussywank - pussywank\ngasim - get a gasmim gif/pic\navatar - gets an nsfw avatar\n```", true)
-        message.channel.send(sexy)
-        let shitfuck = new Discord.RichEmbed()
-            .setColor('#FF0000')
-            .addField('fun cmds', "```\npp - tells you ur penis size\nthotrate - tells you how thottie you are\ngayrate - tells you how gay you are\n8ball - tells if ur fortine is right\nvc - joins a vc\ndc - disconnects from a vc\nfuck - spells fuck in reaction form\npus - spells pussy in reaction form\nascii + text - makes your text into ascii art\nbtc - checks the bitcoin price\n price + cryptocurrentcy + currentcy - checks how much 1 coin  of a choosen crypto is\nlyrics + songname - scrapes lyrics from google and sends them in the channel\ntranslate file - translates a txt file to english\ntranslate - translates text to english or to the specified language in the config.json\nbj - plays jerk off anim\nbrag - brags about selfbot\nhack + userid - hacks user like the fbi\ncovidstats - gives you the recent covid stats Globaly\nkanye - gives you a kanye quote\n```", true)
-        message.channel.send(shitfuck)
-        let tack = new Discord.RichEmbed()
-            .setColor('#FF0000')
-            .addField('Utility Cmds', "```\ndefine + word - defines word with urban dictionary\nlookup + ip - searches ip for location n the shit yk\nd + soundcloud link - downloads song from soundcloud\nyt + youtube link - downloads the yt video\nspoiler + text hides text in spoiler format\nghostping + users @ - ghostpings user :troll:\nfirstmessage - finds the channels first message```", true)
-        message.channel.send(tack)
-
-    }
-
-
-
+// Nsfw Commands here VVVVV
 
     if (command === "pussy") {
         if (message.channel.nsfw) {
@@ -779,10 +811,6 @@ client.on("message", async message => {
             message.channel.send("Error: Channel Is SFW");
         }
     }
-
-
-
-
     if (command == "dog") {
         axios.get("https://random.dog/woof.json")
             .then(async res => {
@@ -804,35 +832,7 @@ client.on("message", async message => {
                 message.channel.send(data.url)
             })
     }
-    let nekoslifee = ["/img/Random_hentai_gif", "/img/pussy", "/img/nsfw_neko_gif", "/img/lewd", "/img/les", "/img/kuni", "/img/cum", "classic", "/img/classic",
-        "/img/boobs",
-        "/img/bj",
-        "/img/anal",
-        "/img/nsfw_avatar",
-        "/img/yuri",
-        "/img/trap",
-        "/img/tits",
-        "/img/solog",
-        "/img/solo",
-        "/img/pwankg",
-        "/img/pussy_jpg",
-        "/img/lewdkemo",
-        "/img/lewdk",
-        "/img/keta",
-        "/img/hololewd",
-        "/img/holoero",
-        "/img/hentai",
-        "/img/futanari",
-        "/img/femdom",
-        "/img/feetg",
-        "/img/erofeet",
-        "/img/feet",
-        "/img/ero",
-        "/img/erok",
-        "/img/erokemo", "/img/eron",
-        "/img/eroyuri", "/img/cum_jpg", "/img/blowjob", "/img/spank", "/img/gasm"
-    ]
-    const nekoslife = nekoslifee[Math.floor(Math.random() * nekoslifee.length)];
+
     if (command == "pnsfw") {
         axios.get(`https://nekos.life/api/v2/${nekoslife}`)
             .then(async res => {
@@ -840,6 +840,7 @@ client.on("message", async message => {
                 message.author.send(data.url)
             })
     }
+/// Image commands here VVVV
 
     if (command == "ascii") {
         const text = args.join(" ");
@@ -937,16 +938,6 @@ client.on("message", async message => {
     .setFooter("Skitzphrenia found it")
     message.channel.send(SEX)
 }
-    if(command === "screenshot"){
-        const www = args.join(" ");
-        axios.get(`https://shot.screenshotapi.net/screenshot?token=${XXX}&url=${www}`)
-        .then(async res => {
-            var data = res.data
-            message.channel.send(data.screenshot)
-        })
-    }
-    
-    
     if (command === "hack"){
     const userid = args.join(" ");
 
@@ -959,312 +950,198 @@ var encoded = base64.encode(bytes);
     .then(msg => msg.edit(`Hacking <@${userid}> .`))
     .then(msg => msg.edit(`Logged Preview: ${encoded} ip: 760 *** ***`))
 }
-
-
-    if (command === "eject") {
+    if(command === "screenshot"){
+        const www = args.join(" ");
+        axios.get(`https://shot.screenshotapi.net/screenshot?token=${sskey}&url=${www}`)
+        .then(async res => {
+            var data = res.data
+            message.channel.send(data.screenshot)
+        })
+    }
+ if (command === "eject") {
     let user = message.mentions.users.first()
     if (!user) {
         return message.reply("This person does not exist")
     }
     message.channel.send(`　
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} w.　 。　.
-
 　　'　　　 　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`)
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} wa.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was n.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was no.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not a.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an .　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an i .　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an im .　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imp .　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an impo .　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an impos.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an impost.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposte.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 i 　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 im 　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imp　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 impo　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 impos　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 impost　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposte　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter r　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter re　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter rem　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter rema　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter remain　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 .then(msg => msg.edit(`
 .　　　 　　.　　　　　。　　 。　. 　
-
 .　　 。　　　　　 ඞ  。 . 　　 • 　　　　•
-
 　　ﾟ　 ${user.username} was not an imposter.　 。　.
-
 　　'　　　  　 　1 imposter remains　。
-
 　　ﾟ　　　.　　　. ,　　　　.　 .`))
 }
 if (command === "brag") {
@@ -1367,23 +1244,7 @@ if (command === "brag") {
             })
     }
 
-
-    if (command == "btc") {
-        btcValue().then(value => {
-            let embed = new Discord.RichEmbed()
-                .setAuthor('Bitcoin price!', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png', 'https://www.google.com/search?q=bitcoin+price&rlz=1CAIUCL_enUS916&oq=bitcoin+price&aqs=chrome..69i57j69i59j0i433l2j0l4j0i433j0.8861j1j7&sourceid=chrome&ie=UTF-8&safe=active&ssui=on')
-                .setColor("#ff9900")
-                .setDescription('$' + `${value} USD`);
-            message.channel.send(embed)
-
-        });
-    }
-
-    if (command === "spoiler") {
-        const special = args.join(" ");
-        message.channel.send(` ||${special}||`)
-    }
-
-
 })
 client.login(config.token);
+
+
